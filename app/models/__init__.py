@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from flask_jwt_extended import create_access_token
 
 # Importa db desde app
 from app import db
@@ -23,3 +24,7 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User {self.username}>'
+    
+    def generate_token(self):
+        """Genera token JWT para el usuario"""
+        return create_access_token(identity=self.id)
